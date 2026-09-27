@@ -1,26 +1,34 @@
 # Fazenda do Recomeço
 
-Um pequeno RPG em pixel art feito somente com Java/Swing. Você é um fazendeiro
-solitário que encontra uma propriedade esquecida e a transforma em um lar com
-campo, animais, lago e uma casa nova.
+Um RPG de fazenda em pixel art para navegador. Um fazendeiro solitário chega a
+uma propriedade abandonada e, com trabalho, transforma ruínas em casa, campos,
+animais e um lago cheio de vida.
 
-## Como executar
+## Executar
 
-É necessário ter o JDK 17 ou mais recente instalado.
+O jogo usa somente Python 3 (biblioteca padrão), HTML, CSS e JavaScript.
 
 ```bash
-javac -d out src/FazendaDoRecomeco.java
-java -cp out FazendaDoRecomeco
+python3 app.py
 ```
+
+Depois, abra [http://localhost:8000](http://localhost:8000) no navegador.
 
 ## Controles
 
 | Tecla | Ação |
 | --- | --- |
-| `WASD` ou setas | Caminhar |
-| `E` ou espaço | Interagir / construir / colher |
-| `R` | Reiniciar a fazenda |
+| `WASD` ou setas | Caminhar pela fazenda |
+| `E` ou espaço | Interagir com o local próximo |
+| `R` | Recomeçar a jornada |
 
-Fique ao lado de um lote vazio para ará-lo, plante sementes nos lotes arados,
-regue-os e colha quando amadurecerem. Nas bancadas de construção e no galinheiro,
-interaja para desbloquear as melhorias da fazenda.
+## Objetivo
+
+1. Visite o **lago** para recolher madeira.
+2. Use os **canteiros** para arar, plantar e colher. As plantas amadurecem a
+   cada novo dia.
+3. Na **oficina**, construa e melhore seu lar.
+4. No **celeiro**, construa o galinheiro e depois o redil para acolher animais.
+
+O estado e as regras de progressão pertencem ao servidor Python; a interface no
+navegador apenas desenha o mundo e envia as ações do jogador.
