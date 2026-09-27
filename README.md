@@ -20,6 +20,7 @@ Depois, abra [http://localhost:8000](http://localhost:8000) no navegador.
 | --- | --- |
 | `WASD` ou setas | Caminhar pela fazenda |
 | `E` ou espaço | Interagir com o local próximo |
+| `N` | Começar o próximo dia |
 | `R` | Recomeçar a jornada |
 
 ## Objetivo
@@ -29,6 +30,7 @@ Depois, abra [http://localhost:8000](http://localhost:8000) no navegador.
    cada novo dia.
 3. Na **oficina**, construa e melhore seu lar.
 4. No **celeiro**, construa o galinheiro e depois o redil para acolher animais.
+5. Converse com **Lia** e **Bento**, os vizinhos que voltarão a trazer vida à região.
 
 O estado e as regras de progressão pertencem ao servidor Python; a interface no
 navegador apenas desenha o mundo e envia as ações do jogador.

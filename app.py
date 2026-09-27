@@ -12,6 +12,10 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).parent
 PLOTS = [(112, 72), (128, 72), (144, 72), (160, 72), (112, 88), (128, 88),
          (144, 88), (160, 88), (112, 104), (128, 104), (144, 104), (160, 104)]
+CHARACTERS = [
+    {"id": "lia", "name": "Lia", "x": 191, "y": 79, "palette": "rose"},
+    {"id": "bento", "name": "Bento", "x": 294, "y": 143, "palette": "blue"},
+]
 
 
 class Farm:
@@ -25,15 +29,29 @@ class Farm:
         self.day, self.wood, self.seeds, self.crops = 1, 8, 7, 0
         self.house, self.barn = 0, 0
         self.plots = [0] * len(PLOTS)
+        self.dialogue = None
+        self.talked_to = set()
         self.message = "Uma fazenda esquecida... e um novo começo."
 
     def state(self) -> dict:
         return {"player": self.player, "day": self.day, "wood": self.wood,
                 "seeds": self.seeds, "crops": self.crops, "house": self.house,
-                "barn": self.barn, "plots": self.plots, "message": self.message}
+                "barn": self.barn, "plots": self.plots, "message": self.message,
+                "characters": CHARACTERS, "dialogue": self.dialogue,
+                "quest": self.quest()}
 
     def say(self, text: str) -> None:
+        self.dialogue = None
         self.message = text
+
+    def quest(self) -> str:
+        if self.house == 0:
+            return f"Reconstrua seu lar ({self.wood}/6 madeira)"
+        if self.barn == 0:
+            return f"Construa o galinheiro ({self.wood}/5 madeira)"
+        if self.barn == 1:
+            return f"Prepare o redil ({self.wood}/9 madeira, {self.crops}/2 colheitas)"
+        return "A fazenda voltou a ter vida!"
 
     def near(self, x: int, y: int) -> bool:
         return abs(self.player[0] - x) < 18 and abs(self.player[1] - y) < 18
@@ -49,7 +67,39 @@ class Farm:
         self.plots = [3 if plot == 2 else plot for plot in self.plots]
         self.say(f"Dia {self.day}: a terra continua florescendo.")
 
+    def talk(self, character: dict) -> None:
+        name = character["name"]
+        first_time = character["id"] not in self.talked_to
+        self.talked_to.add(character["id"])
+        if character["id"] == "lia":
+            lines = (["Você veio mesmo ficar? Esta terra estava silenciosa há anos.",
+                      "O lago guarda tábuas trazidas pela corrente. Elas podem salvar sua casa."]
+                     if first_time else
+                     ["Cada semente é uma promessa, fazendeiro.", "Quando a casa estiver pronta, ela terá uma luz na janela."])
+        else:
+            lines = (["Ouvi martelos na velha fazenda. Bom ouvir vida por aqui.",
+                      "Galinhas gostam de abrigo. O celeiro ainda parece firme."]
+                     if first_time else
+                     ["As ovelhas vão gostar do campo que você está cuidando.", "Uma boa fazenda é feita de paciência e gentileza."])
+        self.dialogue = {"speaker": name, "palette": character["palette"], "lines": lines, "line": 0}
+        self.message = f"{name} quer conversar."
+
+    def advance_dialogue(self) -> bool:
+        if not self.dialogue:
+            return False
+        self.dialogue["line"] += 1
+        if self.dialogue["line"] >= len(self.dialogue["lines"]):
+            self.dialogue = None
+            self.message = "A conversa trouxe um pouco de calor à fazenda."
+        return True
+
     def interact(self) -> None:
+        if self.advance_dialogue():
+            return
+        for character in CHARACTERS:
+            if self.near(character["x"], character["y"]):
+                self.talk(character)
+                return
         if self.near(55, 52):
             if self.house == 0 and self.wood >= 6:
                 self.wood -= 6; self.house = 1; self.say("Uma cabana simples. Agora existe um lar.")

@@ -26,6 +26,14 @@ class FarmTest(unittest.TestCase):
         farm.reset()
         self.assertEqual((farm.day, farm.wood, farm.house, farm.plots[0]), (1, 8, 0, 0))
 
+    def test_talking_to_lia_opens_and_advances_dialogue(self):
+        farm = Farm()
+        farm.player = [191, 79]
+        farm.interact()
+        self.assertEqual(farm.dialogue["speaker"], "Lia")
+        farm.interact(); farm.interact()
+        self.assertIsNone(farm.dialogue)
+
 
 if __name__ == "__main__":
     unittest.main()
