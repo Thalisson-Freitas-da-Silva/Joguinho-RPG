@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+:root { color-scheme: dark; font-family: "VT323", monospace; background: #15262b; color: #fff4cf; }
+* { box-sizing: border-box; }
+body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: radial-gradient(circle at top, #345854, #15262b 62%); }
+.game-shell { width: min(100%, 1040px); padding: 24px; text-align: center; }
+header { text-shadow: 3px 3px #1b3334; }
+h1 { margin: 5px 0; font: 20px "Press Start 2P", monospace; color: #ffe6a6; line-height: 1.45; }
+header p { margin: 4px; font-size: 24px; color: #b4d58d; }.eyebrow { color: #e4a95c; letter-spacing: 3px; }
+.game-frame { position: relative; overflow: hidden; border: 8px solid #eed092; box-shadow: 0 0 0 5px #714d39, 0 18px 35px #071316; background: #78b15b; }
+canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.message { position: absolute; bottom: 14px; left: 8%; right: 8%; padding: 8px 16px; min-height: 34px; background: #1e3336eF; border: 3px solid #e9ca87; font-size: 22px; text-align: left; }
+.legend { margin: 17px auto 0; padding: 12px; border: 2px solid #4d726b; color: #c6dbad; font-size: 20px; }.legend b { color: #ffdb8e; margin-left: 12px; }
+@media (max-width: 600px) { .game-shell { padding: 12px; } h1 { font-size: 14px; }.message { font-size: 17px; bottom: 8px; padding: 6px; }.legend { font-size: 16px; } }
